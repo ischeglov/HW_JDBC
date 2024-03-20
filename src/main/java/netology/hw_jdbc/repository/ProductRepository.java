@@ -2,6 +2,7 @@ package netology.hw_jdbc.repository;
 
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.stereotype.Repository;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -11,18 +12,19 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-@org.springframework.stereotype.Repository
-public class Repository {
+@Repository
+public class ProductRepository {
 
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+    private String scriptSelectFileName = "select_product_name.sql";
+    private String script = read(scriptSelectFileName);
 
-    public Repository(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
+    public ProductRepository(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
     }
 
     public List<String> getProductName(String name) {
-        String scriptFileName = read("select_product_name.sql");
-        return namedParameterJdbcTemplate.queryForList(scriptFileName, Map.of("name", name), String.class);
+        return namedParameterJdbcTemplate.queryForList(script, Map.of("name", name), String.class);
     }
 
     private static String read(String scriptFileName) {

@@ -1,15 +1,16 @@
 package netology.hw_jdbc.service;
 
 import lombok.AllArgsConstructor;
-import netology.hw_jdbc.repository.Repository;
+import netology.hw_jdbc.repository.ProductRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@org.springframework.stereotype.Service
+@Service
 @AllArgsConstructor
-public class Service {
+public class ProductService {
 
-    private Repository repository;
+    private ProductRepository repository;
 
     public List<String> getProductName(String name) {
         return repository.getProductName(name);
